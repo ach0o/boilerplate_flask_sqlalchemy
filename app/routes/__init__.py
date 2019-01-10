@@ -1,5 +1,5 @@
 from .product import api_product
 
 
-def init_app(app):
+def register_blueprint(app):
     app.register_blueprint(api_product)
