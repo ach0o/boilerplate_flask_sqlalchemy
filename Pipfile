@@ -11,6 +11,9 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+pytest = "*"
+flask-testing = "*"
+python-dotenv = "*"
 
 
 [dev-packages]
