@@ -8,20 +8,21 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: cci-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
             sudo pip install pipenv
             pipenv install
       - save_cache:
-          key: cci-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/bin/python3.6/site-packages"
+
       - run:
           command: |
-            pipenv run "pytest"
+            mkdir test-reports
+            pipenv run pytest --junitxml=test-reports/junit.xml
+
       - run:
           name: Install Docker Compose
           command: |
@@ -37,10 +38,10 @@ jobs:
             docker-compose up -d
 
       - store_test_results:
-          path: test-results
+          path: test-reports
 
       - store_artifacts:
-          path: test-results
+          path: test-reports
           destination: tr1
 
 workflows:
