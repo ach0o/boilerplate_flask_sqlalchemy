@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    image: achooan/flask-rest-achooan:$CIRCLE_SHA1
+    ports: 
+    - '80:5000'
