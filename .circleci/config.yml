@@ -1,27 +1,34 @@
 version: 2
-jobs:
-  build:
+
+refs:
+  docker: &docker
     docker:
       - image: circleci/python:3.6.4
         environment:
           PIPENV_VENV_IN_PROJECT: true
+
+jobs:
+  build:
+    <<: *docker
+
     steps:
       - checkout
       - restore_cache:
-          key: cci-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
             sudo pip install pipenv
             pipenv install
       - save_cache:
-          key: cci-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/bin/python3.6/site-packages"
+
       - run:
           command: |
-            pipenv run "pytest"
+            mkdir test-reports
+            pipenv run pytest --junitxml=test-reports/junit.xml
+
       - run:
           name: Install Docker Compose
           command: |
@@ -33,15 +40,28 @@ jobs:
 
       - run:
           command: |
-            docker-compose build
+            docker-compose build 
             docker-compose up -d
+            docker-compose down
 
       - store_test_results:
-          path: test-results
+          path: test-reports
 
       - store_artifacts:
-          path: test-results
+          path: test-reports
           destination: tr1
+
+      - run:
+          name: Setup Heroku
+          command: |
+            chmod +x .circleci/setup-heroku.sh
+            .circleci/setup-heroku.sh
+      - run:
+          name: Deploy to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+
 
 workflows:
   version: 2
