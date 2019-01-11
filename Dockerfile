@@ -1,6 +1,6 @@
 FROM python:3.6.4
 
-MAINTAINER achooan "88soldieron@gmail.com"
+LABEL achooan "88soldieron@gmail.com"
 
 # Set working directory
 WORKDIR /app

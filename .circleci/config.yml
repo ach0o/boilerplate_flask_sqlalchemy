@@ -1,10 +1,16 @@
 version: 2
-jobs:
-  build:
+
+refs:
+  docker: &docker
     docker:
       - image: circleci/python:3.6.4
         environment:
           PIPENV_VENV_IN_PROJECT: true
+
+jobs:
+  build:
+    <<: *docker
+
     steps:
       - checkout
       - restore_cache:
@@ -34,8 +40,9 @@ jobs:
 
       - run:
           command: |
-            docker-compose build
+            docker-compose build 
             docker-compose up -d
+            docker-compose down
 
       - store_test_results:
           path: test-reports
@@ -43,6 +50,18 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: tr1
+
+      - run:
+          name: Setup Heroku
+          command: |
+            chmod +x .circleci/setup-heroku.sh
+            .circleci/setup-heroku.sh
+      - run:
+          name: Deploy to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+
 
 workflows:
   version: 2
