@@ -39,10 +39,16 @@ jobs:
       - setup_remote_docker
 
       - run:
+          name: Run Docker Compose
           command: |
             docker-compose build 
             docker-compose up -d
             docker-compose down
+
+      - run:
+          name: Push Docker Image
+          command: |
+            echo 'TODO' 
 
       - store_test_results:
           path: test-reports
@@ -56,11 +62,11 @@ jobs:
           command: |
             chmod +x .circleci/setup-heroku.sh
             .circleci/setup-heroku.sh
+
       - run:
           name: Deploy to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
 
 
 workflows:
