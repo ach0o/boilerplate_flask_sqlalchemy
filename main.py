@@ -1,8 +1,11 @@
 import os
 
-from app import config, create_app
+from app import create_app
 
 if __name__ == '__main__':
-    create_app().run(debug=True,
-                     host='0.0.0.0',
-                     port=int(os.environ.get('PORT', 5000)))
+    debug = os.environ.get('ENV', 'dev') == 'dev'
+
+    create_app().run(host='0.0.0.0',
+                     port=int(os.environ.get('PORT', 5000)),
+                     load_dotenv=True,
+                     debug=debug)
