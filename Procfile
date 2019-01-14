@@ -1,1 +1,1 @@
-web: python main.py; flask create-db
+web: flask create-db; python main.py
