@@ -12,4 +12,11 @@ EXPOSE 5000
 # Set environment variables
 ENV PORT 5000
 
-CMD [ "python", "/app/main.py" ]
+# Install packages
+RUN pip install --upgrade pip \
+  && pip install pipenv \
+  && pipenv lock -r > requirements.txt \
+  && pip install -r requirements.txt
+
+# Initialize database
+RUN flask create-db

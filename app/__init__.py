@@ -36,3 +36,5 @@ def create_app(config=None):
     app.cli.command()(commands.drop_db)
 
     return app
+
+app = create_app()
