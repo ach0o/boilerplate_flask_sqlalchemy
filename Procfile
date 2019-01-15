@@ -1,1 +1,1 @@
-web: flask create-db; python main.py
+web: flask create-db; gunicorn -w 1 -b 0.0.0.0:$PORT app:app

@@ -1,8 +1,20 @@
-version: '3'
+version: "3"
 
 services:
   web:
     build: .
     image: achooan/flask-rest-achooan:$CIRCLE_SHA1
-    ports: 
-    - '80:5000'
+    ports:
+      - "5000"
+    command: gunicorn -w 1 -b 0.0.0.0:5000 app:app
+    container_name: flask_web
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - web
+    container_name: flask_nginx
