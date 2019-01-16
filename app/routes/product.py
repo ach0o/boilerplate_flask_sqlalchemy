@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
+from sqlalchemy.exc import IntegrityError
 
 from app.db import db
 from app.models import Product, product_schema, products_schema
-
 
 api_product = Blueprint('product', __name__, url_prefix='/product')
 
@@ -18,7 +18,14 @@ def add_product():
     new_product = Product(name, description, price, quantity)
 
     db.session.add(new_product)
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except IntegrityError:
+        return jsonify({'message': 'Duplicate data entry'}), 400
+    except Exception as e:
+        return jsonify({'message': str(e.orig)}), 400
+
     return product_schema.jsonify(new_product)
 
 
@@ -27,6 +34,7 @@ def add_product():
 def get_products():
     all_products = Product.query.all()
     result = products_schema.dump(all_products)
+
     return jsonify(result.data)
 
 
@@ -34,6 +42,7 @@ def get_products():
 @api_product.route('/<id>', methods=['GET'])
 def get_product(id):
     product = Product.query.get(id)
+
     return product_schema.jsonify(product)
 
 
@@ -52,7 +61,11 @@ def update_product(id):
     product.price = price
     product.quantity = quantity
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        return jsonify({'message': str(e.orig)}), 400
+
     return product_schema.jsonify(product)
 
 
@@ -61,6 +74,10 @@ def update_product(id):
 def delete_product(id):
     product = Product.query.get(id)
     db.session.delete(product)
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        return jsonify({'message': str(e.orig)}), 400
 
     return product_schema.jsonify(product)

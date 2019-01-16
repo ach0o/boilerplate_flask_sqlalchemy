@@ -1,4 +1,5 @@
 import os
+import sys
 
 from flask import Flask, jsonify, request
 from flask_marshmallow import Marshmallow
@@ -6,6 +7,17 @@ from flask_sqlalchemy import SQLAlchemy
 
 from . import commands, db, routes
 from .config import ROOT_DIR
+from loguru import logger
+
+logger.configure(
+    handlers=[
+        dict(sink=sys.stderr),
+        dict(sink=f'{ROOT_DIR}/log/app.log', rotation='200 MB')
+    ],
+    activation=[
+        ('app.routes.product', True)
+    ]
+)
 
 
 def create_app(config=None):
@@ -37,4 +49,14 @@ def create_app(config=None):
 
     return app
 
+
 app = create_app()
+
+
+@app.after_request
+def log_request(response):
+    logger.debug(f'{request.remote_addr} - {request.remote_user} '
+                 f'referrer:{request.referrer} {request.user_agent} '
+                 f'{request.method} {response.status_code} {request.url} '
+                 f'req:{request.json} res:{response.get_json()}')
+    return response
