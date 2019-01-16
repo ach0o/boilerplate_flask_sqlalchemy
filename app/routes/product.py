@@ -24,7 +24,7 @@ def add_product():
     except IntegrityError:
         return jsonify({'message': 'Duplicate data entry'}), 400
     except Exception as e:
-        return jsonify({'message': str(e.orig)}), 400
+        return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(new_product)
 
@@ -64,7 +64,7 @@ def update_product(id):
     try:
         db.session.commit()
     except Exception as e:
-        return jsonify({'message': str(e.orig)}), 400
+        return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(product)
 
@@ -78,6 +78,6 @@ def delete_product(id):
     try:
         db.session.commit()
     except Exception as e:
-        return jsonify({'message': str(e.orig)}), 400
+        return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(product)
