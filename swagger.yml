@@ -50,7 +50,7 @@ paths:
             items:
               $ref: "#/definitions/Product"
 
-  /product/{productId}:
+  /product/{id}:
     get:
       operationId: "app.routes.product.get_product"
       tags:
@@ -58,7 +58,7 @@ paths:
       summary: "A product added by a client"
       description: "Read the product with id"
       parameters:
-        - name: "productId"
+        - name: "id"
           in: "path"
           description: "ID of product to return"
           required: true
@@ -76,7 +76,7 @@ paths:
       summary: "A product updated by a client"
       description: "Update the product with id"
       parameters:
-        - name: "productId"
+        - name: "id"
           in: "path"
           description: "ID of product to return"
           required: true
@@ -98,7 +98,7 @@ paths:
       summary: "A product delete by a client"
       description: "Delete the product with id"
       parameters:
-        - name: "productId"
+        - name: "id"
           in: "path"
           description: "ID of product to return"
           required: true
