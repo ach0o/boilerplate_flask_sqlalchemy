@@ -1,17 +1,18 @@
 import os
 import sys
 
+import connexion
 from flask import Flask, jsonify, request
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from loguru import logger
 
 from . import commands, db, routes
 from .config import ROOT_DIR
-from loguru import logger
 
 logger.configure(
     handlers=[
-        dict(sink=sys.stderr),
+        dict(sink=sys.stderr, ),
         dict(sink=f'{ROOT_DIR}/log/app.log', rotation='200 MB')
     ],
     activation=[
@@ -22,7 +23,11 @@ logger.configure(
 
 def create_app(config=None):
     # Initialize flask app
-    app = Flask(__name__)
+    # app = Flask(__name__)
+    cxn_app = connexion.FlaskApp(__name__, specification_dir='../')
+    cxn_app.add_api('swagger.yml')
+
+    app = cxn_app.app
 
     # Set database configurations
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(

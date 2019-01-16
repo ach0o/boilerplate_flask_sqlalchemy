@@ -1,0 +1,37 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/"
+
+# Paths supported by the server application
+paths:
+  /product:
+    get:
+      operationId: "app.routes.product.get_products"
+      tags:
+        - "Product"
+      summary: "Products added by clients"
+      description: "Read the list of products"
+      responses:
+        200:
+          description: "Successful read product list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                name:
+                  type: "string"
+                description:
+                  type: "string"
+                price:
+                  type: "number"
+                  format: "float"
+                quantity:
+                  type: "integer"
