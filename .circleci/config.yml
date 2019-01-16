@@ -45,7 +45,9 @@ jobs:
 
       - run:
           name: Push Docker Image
-          command: echo 'TODO-push by branch'
+          command: |
+            docker login -u$DOCKERHUB_LOGIN -p$DOCKERHUB_PW
+            docker push achooan/$APP_NAME:$CIRCLE_BRANCH-$CIRCLE_SHA1
 
       - store_test_results:
           path: test-reports
@@ -58,8 +60,7 @@ jobs:
     <<: *docker
     steps:
       - checkout
-      - run:
-          command: echo 'TODO'
+      - echo "TODO deploy to production"
 
   deploy-dev:
     <<: *docker
