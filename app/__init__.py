@@ -4,15 +4,15 @@ import sys
 from flask import Flask, jsonify, request
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from loguru import logger
 
 from . import commands, db, routes
 from .config import ROOT_DIR
-from loguru import logger
 
 logger.configure(
     handlers=[
         dict(sink=sys.stderr),
-        dict(sink=f'{ROOT_DIR}/log/app.log', rotation='200 MB')
+        dict(sink=f'{ROOT_DIR}/log/app.log', rotation='200 MB', level='ERROR')
     ],
     activation=[
         ('app.routes.product', True)
@@ -55,8 +55,14 @@ app = create_app()
 
 @app.after_request
 def log_request(response):
-    logger.debug(f'{request.remote_addr} - {request.remote_user} '
-                 f'referrer:{request.referrer} {request.user_agent} '
-                 f'{request.method} {response.status_code} {request.url} '
-                 f'req:{request.json} res:{response.get_json()}')
+    if response.status_code != 200:
+        logger.error(f'{request.remote_addr} - {request.remote_user} '
+                    f'referrer:{request.referrer} {request.user_agent} '
+                    f'{request.method} {response.status_code} {request.url} '
+                    f'req:{request.json} res:{response.get_json()}')
+    else:
+        logger.debug(f'{request.remote_addr} - {request.remote_user} '
+                    f'referrer:{request.referrer} {request.user_agent} '
+                    f'{request.method} {response.status_code} {request.url} '
+                    f'req:{request.json} res:{response.get_json()}')
     return response
