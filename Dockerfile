@@ -14,9 +14,7 @@ ENV PORT 5000
 
 # Install packages
 RUN pip install --upgrade pip \
-  && pip install pipenv \
-  && pipenv lock -r > requirements.txt \
-  && pip install -r requirements.txt
+  && pip install -e .
 
 # Initialize database
 RUN flask create-db

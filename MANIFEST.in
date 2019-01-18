@@ -1,0 +1,5 @@
+# Include the Swagger YAML
+include swagger.yml
+
+# Include the LICENSE file
+include LICENSE.txt
