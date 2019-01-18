@@ -5,9 +5,6 @@ from pytest import fixture
 from app import create_app
 from app.config import ROOT_DIR
 from app.db import db
-from app.models import Product
-
-from .context import app
 
 
 @fixture(scope='session')

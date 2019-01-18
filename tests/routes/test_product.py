@@ -1,9 +1,5 @@
 import json
 
-from app.db import db
-from app.models import Product
-from tests.context import app
-
 
 def test_add_product(fx_client, data):
     response = fx_client.post('/product/', data=json.dumps(data),

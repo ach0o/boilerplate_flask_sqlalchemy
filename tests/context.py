@@ -1,6 +1,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import app  # noqa: F401
 
-import app
+_parent_path = os.path.join(os.path.dirname(__file__), '..')
+sys.path.insert(0, os.path.abspath(_parent_path))

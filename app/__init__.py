@@ -2,9 +2,7 @@ import os
 import sys
 
 import connexion
-from flask import Flask, jsonify, request
-from flask_marshmallow import Marshmallow
-from flask_sqlalchemy import SQLAlchemy
+from flask import request
 from loguru import logger
 
 from . import commands, db, routes
@@ -62,12 +60,12 @@ app = create_app()
 def log_request(response):
     if response.status_code != 200:
         logger.error(f'{request.remote_addr} - {request.remote_user} '
-                    f'referrer:{request.referrer} {request.user_agent} '
-                    f'{request.method} {response.status_code} {request.url} '
-                    f'req:{request.json} res:{response.get_json()}')
+                     f'referrer:{request.referrer} {request.user_agent} '
+                     f'{request.method} {response.status_code} {request.url} '
+                     f'req:{request.json} res:{response.get_json()}')
     else:
         logger.debug(f'{request.remote_addr} - {request.remote_user} '
-                    f'referrer:{request.referrer} {request.user_agent} '
-                    f'{request.method} {response.status_code} {request.url} '
-                    f'req:{request.json} res:{response.get_json()}')
+                     f'referrer:{request.referrer} {request.user_agent} '
+                     f'{request.method} {response.status_code} {request.url} '
+                     f'req:{request.json} res:{response.get_json()}')
     return response

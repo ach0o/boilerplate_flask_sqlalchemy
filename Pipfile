@@ -18,6 +18,7 @@ gunicorn = "*"
 loguru = "*"
 connexion = {extras = ["swagger-ui"]}
 "flake8" = "*"
+setuptools = "*"
 
 
 [dev-packages]
