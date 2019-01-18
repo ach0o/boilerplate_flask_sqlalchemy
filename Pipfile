@@ -17,11 +17,11 @@ click = "*"
 gunicorn = "*"
 loguru = "*"
 connexion = {extras = ["swagger-ui"]}
+"flake8" = "*"
 
 
 [dev-packages]
 
-pylint = "*"
 "autopep8" = "*"
 
 

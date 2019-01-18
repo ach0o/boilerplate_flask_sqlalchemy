@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "\xF0\x9F\x9A\xA7 Running tests.."
+pytest
