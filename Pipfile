@@ -11,20 +11,23 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
-pytest = "*"
 python-dotenv = "*"
 click = "*"
 gunicorn = "*"
 loguru = "*"
 connexion = {extras = ["swagger-ui"]}
 "flake8" = "*"
-setuptools = "*"
 pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.2b1"}
+sphinx = "*"
 
 
 [dev-packages]
 
 "autopep8" = "*"
+pytest = "*"
+setuptools = "*"
+codecov = "*"
+pytest-cov = "*"
 
 
 [requires]

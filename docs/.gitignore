@@ -1,0 +1,6 @@
+*
+!.gitignore
+!index.rst
+!conf.py
+!Makefile
+!collect_and_build.sh
