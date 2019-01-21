@@ -19,7 +19,7 @@ loguru = "*"
 connexion = {extras = ["swagger-ui"]}
 "flake8" = "*"
 setuptools = "*"
-pyyaml = ">=4.2b1"
+pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.2b1"}
 
 
 [dev-packages]
@@ -30,3 +30,5 @@ pyyaml = ">=4.2b1"
 [requires]
 
 python_version = "3.6"
+
+
