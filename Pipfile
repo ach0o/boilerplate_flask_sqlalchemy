@@ -19,6 +19,7 @@ loguru = "*"
 connexion = {extras = ["swagger-ui"]}
 "flake8" = "*"
 setuptools = "*"
+pyyaml = ">=4.2b1"
 
 
 [dev-packages]
