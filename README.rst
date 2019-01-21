@@ -1,11 +1,12 @@
 Boilerplate Flask SQLAlchemy
 ============================
 
+|build| |coverage|
 
 Overview
 --------
 
-This is a boilerplate RESTful app based on Flask + SQLAlchemy 
+This is a boilerplate RESTful app based on Flask + SQLAlchemy
 with gunicorn, Nginx and Docker.
 
 ....
@@ -51,7 +52,7 @@ Working with Docker
 
   .. code-block:: console
 
-    $ docker-compose build 
+    $ docker-compose build
 
 
   To edit a tag of the docker image, edit ``image`` from the ``docker-compose.yml``
@@ -75,7 +76,7 @@ Private Server (TODO)
 ^^^^^^^^^^^^^^^^^^^^^
 1. Create new docker image from CircleCi
 2. Push the image to the Container Registry (eg. `DockerHub <https://www.docker.com/products/docker-hub>`_)
-3. Assess your server and install dependencies like docker and docker-compose 
+3. Assess your server and install dependencies like docker and docker-compose
 4. Pull the image created and run:
 
   .. code-block:: console
@@ -107,6 +108,12 @@ API Documentation (RESTful)
 
 Swagger UI is used for this documentation. The configuration can be found at ``swagger.yml``.
 
-To see the documentation, run the app and simply go to 
+To see the documentation, run the app and simply go to
 
 * ``http://{YOUR_HOST}:{YOUR_PORT}/ui``
+
+.. |build| image:: https://circleci.com/gh/achooan/boilerplate_flask_sqlalchemy/tree/master.svg?style=shield
+    :target: https://circleci.com/gh/achooan/boilerplate_flask_sqlalchemy/tree/master
+
+.. |coverage| image:: https://codecov.io/gh/achooan/boilerplate_flask_sqlalchemy/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/achooan/boilerplate_flask_sqlalchemy

@@ -21,6 +21,8 @@ connexion = {extras = ["swagger-ui"]}
 setuptools = "*"
 pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.2b1"}
 sphinx = "*"
+codecov = "*"
+pytest-cov = "*"
 
 
 [dev-packages]
