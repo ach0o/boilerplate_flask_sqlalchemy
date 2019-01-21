@@ -20,6 +20,7 @@ connexion = {extras = ["swagger-ui"]}
 "flake8" = "*"
 setuptools = "*"
 pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.2b1"}
+sphinx = "*"
 
 
 [dev-packages]
@@ -30,5 +31,3 @@ pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.
 [requires]
 
 python_version = "3.6"
-
-
