@@ -60,7 +60,8 @@ jobs:
     <<: *docker
     steps:
       - checkout
-      - echo "TODO deploy to production"
+      - run:
+          command: echo "TODO deploy to production"
 
   deploy-dev:
     <<: *docker
