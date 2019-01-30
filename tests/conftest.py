@@ -1,21 +1,12 @@
-import os
-
 from pytest import fixture
 
 from app import create_app
-from app.config import ROOT_DIR
 from app.db import db
 
 
 @fixture(scope='session')
 def fx_app():
-    test_config = {
-        "SQLALCHEMY_DATABASE_URI":
-        f"sqlite:///{os.path.join(ROOT_DIR, 'test.sqlite')}"
-    }
-
-    app = create_app(config=test_config)
-    app.config['TESTING'] = True
+    app = create_app()
 
     app.app_context().push()
 

@@ -6,20 +6,10 @@ from flask import request
 from loguru import logger
 
 from . import commands, db, routes
-from .config import ROOT_DIR
-
-logger.configure(
-    handlers=[
-        dict(sink=sys.stderr),
-        dict(sink=f'{ROOT_DIR}/log/app.log', rotation='200 MB', level='ERROR')
-    ],
-    activation=[
-        ('app.routes.product', True)
-    ]
-)
+from config import stage
 
 
-def create_app(config=None):
+def create_app():
     # Initialize flask app
     # app = Flask(__name__)
     cxn_app = connexion.FlaskApp(__name__, specification_dir='../')
@@ -27,19 +17,11 @@ def create_app(config=None):
 
     app = cxn_app.app
 
-    # Set database configurations
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-        'DATABASE_URL',
-        f"sqlite:///{os.path.join(ROOT_DIR, 'db.sqlite')}")
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    if config is not None:
-        if isinstance(config, dict):
-            app.config.update(config)
-        elif config.endswith('.json'):
-            app.config.from_json(config)
-        elif config.endswith('.py'):
-            app.config.from_pyfile(config)
+    app.config.from_object(stage[os.environ.get('FLASK_ENV', 'development')])
+    # possible configuration injection
+    #   app.config.update(config) # dict
+    #   app.config.from_json(config) # path to json file
+    #   app.config.from_pyfile(config) # path to py file
 
     # Register app to other modules
     db.init_app(app)
@@ -54,6 +36,15 @@ def create_app(config=None):
 
 
 app = create_app()
+logger.configure(
+    handlers=[
+        dict(sink=sys.stderr),
+        dict(sink=app.config['LOG_DIR'], rotation='200 MB', level='ERROR')
+    ],
+    activation=[
+        ('app.routes.product', True)
+    ]
+)
 
 
 @app.after_request
