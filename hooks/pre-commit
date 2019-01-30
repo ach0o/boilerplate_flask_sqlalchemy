@@ -2,7 +2,7 @@
 
 if [ $(command -v flake8) ]; then
   echo "\xF0\x9F\x94\x8D Checking code style.."
-  flake8
+  flake8 app
 else
   echo "flake8 is not installed"
 fi
