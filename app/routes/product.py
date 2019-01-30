@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 from sqlalchemy.exc import IntegrityError
 
 from app.db import db
@@ -21,9 +21,12 @@ def add_product():
 
     try:
         db.session.commit()
-    except IntegrityError:
+    except IntegrityError as ie:
+        current_app.logger.error(f'duplicate data entry: {str(ie.orig)}')
         return jsonify({'message': 'Duplicate data entry'}), 400
     except Exception as e:
+        current_app.logger.error(f'Unexpected Error: {str(e)}',
+                                 exc_info=True)
         return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(new_product)
@@ -64,6 +67,8 @@ def update_product(id):
     try:
         db.session.commit()
     except Exception as e:
+        current_app.logger.error(f'Unexpected Error: {str(e)}',
+                                 exc_info=True)
         return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(product)
@@ -78,6 +83,8 @@ def delete_product(id):
     try:
         db.session.commit()
     except Exception as e:
+        current_app.logger.error(f'Unexpected Error: {str(e)}',
+                                 exc_info=True)
         return jsonify({'message': str(e.orig)}), 500
 
     return product_schema.jsonify(product)

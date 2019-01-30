@@ -1,12 +1,9 @@
 import os
-import sys
 
 import connexion
-from flask import request
-from loguru import logger
 
-from . import commands, db, routes
-from config import stage
+from . import commands, db, routes, logger
+from config import stages
 
 
 def create_app():
@@ -17,7 +14,7 @@ def create_app():
 
     app = cxn_app.app
 
-    app.config.from_object(stage[os.environ.get('FLASK_ENV', 'development')])
+    app.config.from_object(stages[os.environ.get('FLASK_ENV', 'development')])
     # possible configuration injection
     #   app.config.update(config) # dict
     #   app.config.from_json(config) # path to json file
@@ -27,6 +24,7 @@ def create_app():
     db.init_app(app)
     routes.register_blueprint(app)
     app.url_map.strict_slashes = False
+    logger.set_handlers(app)
 
     # Add Commands
     app.cli.command()(commands.create_db)
@@ -36,27 +34,3 @@ def create_app():
 
 
 app = create_app()
-logger.configure(
-    handlers=[
-        dict(sink=sys.stderr),
-        dict(sink=app.config['LOG_DIR'], rotation='200 MB', level='ERROR')
-    ],
-    activation=[
-        ('app.routes.product', True)
-    ]
-)
-
-
-@app.after_request
-def log_request(response):
-    if response.status_code != 200:
-        logger.error(f'{request.remote_addr} - {request.remote_user} '
-                     f'referrer:{request.referrer} {request.user_agent} '
-                     f'{request.method} {response.status_code} {request.url} '
-                     f'req:{request.json} res:{response.get_json()}')
-    else:
-        logger.debug(f'{request.remote_addr} - {request.remote_user} '
-                     f'referrer:{request.referrer} {request.user_agent} '
-                     f'{request.method} {response.status_code} {request.url} '
-                     f'req:{request.json} res:{response.get_json()}')
-    return response

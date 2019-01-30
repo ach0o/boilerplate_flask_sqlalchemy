@@ -18,13 +18,16 @@ class Config(object):
     SECRET_KEY = os.environ.get(
         'SECRET_KEY',
         f'{os.urandom(64)}')
-    LOG_DIR = os.environ.get(
-        'LOG_DIR',
+    LOG_FILEPATH = os.environ.get(
+        'LOG_FILEPATH',
         f'{os.path.join(ROOT_DIR, "log/app.log")}')
+    LOG_LEVEL = os.environ.get(
+        'LOG_LEVEL', 40)  # logging.ERROR
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    LOG_LEVEL = 10  # logging.DEBUG
 
 
 class ProductionConfig(Config):
@@ -39,7 +42,7 @@ class TestingConfig(Config):
         f'sqlite://')
 
 
-stage = {
+stages = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig
