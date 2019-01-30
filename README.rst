@@ -21,8 +21,7 @@ Installation
   # In the project root directory, execute..
   $ pip install -U pipenv
 
-  # Let the virtual environment and packages to be installed
-  # in the project
+  # Let the virtual environment and packages to be installed in the project
   $ export PIPENV_VENV_IN_PROJECT=1
 
   $ pipenv install  # Install required packages
