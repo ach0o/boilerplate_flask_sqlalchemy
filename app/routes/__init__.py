@@ -1,7 +1,5 @@
-from flask import Blueprint
-
-bp_api = Blueprint('api', __name__)
+from .product import api_product
 
 
 def register_blueprint(app):
-    app.register_blueprint(bp_api, url_prefix='/api/v1')
+    app.register_blueprint(api_product)

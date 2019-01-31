@@ -12,7 +12,7 @@ basePath: "/"
 
 # Paths supported by the server application
 paths:
-  /api/v1/product:
+  /product:
     post:
       operationId: "app.routes.product.add_product"
       tags:
@@ -50,7 +50,7 @@ paths:
             items:
               $ref: "#/definitions/Product"
 
-  /api/v1/product/{id}:
+  /product/{id}:
     get:
       operationId: "app.routes.product.get_product"
       tags:
