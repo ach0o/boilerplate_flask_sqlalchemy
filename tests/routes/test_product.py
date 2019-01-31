@@ -2,7 +2,7 @@ import json
 
 
 def test_add_product(fx_client, data):
-    response = fx_client.post('/product/', data=json.dumps(data),
+    response = fx_client.post('/api/v1/product', data=json.dumps(data),
                               content_type='application/json')
 
     assert response.status_code == 200
@@ -15,7 +15,7 @@ def test_add_product(fx_client, data):
 
 
 def test_get_products(fx_client, data):
-    response = fx_client.get('/product/')
+    response = fx_client.get('/api/v1/product')
 
     assert response.status_code == 200
     response_output = json.loads(response.get_data())
@@ -29,7 +29,7 @@ def test_get_products(fx_client, data):
 
 
 def test_get_product(fx_client, data):
-    response = fx_client.get('/product/1')
+    response = fx_client.get('/api/v1/product/1')
 
     assert response.status_code == 200
     response_output = json.loads(response.get_data())
@@ -43,7 +43,8 @@ def test_get_product(fx_client, data):
 
 
 def test_update_product(fx_client, another_data):
-    response = fx_client.put('/product/1', data=json.dumps(another_data),
+    response = fx_client.put('/api/v1/product/1',
+                             data=json.dumps(another_data),
                              content_type='application/json')
 
     assert response.status_code == 200
@@ -58,7 +59,7 @@ def test_update_product(fx_client, another_data):
 
 
 def test_delete_product(fx_client, data):
-    response = fx_client.delete('/product/1')
+    response = fx_client.delete('/api/v1/product/1')
 
     assert response.status_code == 200
     response_output = json.loads(response.get_data())

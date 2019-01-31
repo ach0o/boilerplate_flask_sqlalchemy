@@ -1,14 +1,13 @@
-from flask import Blueprint, current_app, jsonify, request
+from flask import current_app, jsonify, request
 from sqlalchemy.exc import IntegrityError
 
 from app.db import db
 from app.models import Product, product_schema, products_schema
-
-api_product = Blueprint('product', __name__, url_prefix='/product')
+from app.routes import bp_api
 
 
 # Create a product
-@api_product.route('/', methods=['POST'])
+@bp_api.route('/product', methods=['POST'])
 def add_product():
     name = request.json['name']
     description = request.json['description']
@@ -33,7 +32,7 @@ def add_product():
 
 
 # Get all products
-@api_product.route('/', methods=['GET'])
+@bp_api.route('/product', methods=['GET'])
 def get_products():
     all_products = Product.query.all()
     result = products_schema.dump(all_products)
@@ -42,7 +41,7 @@ def get_products():
 
 
 # Get a single product
-@api_product.route('/<id>', methods=['GET'])
+@bp_api.route('/product/<id>', methods=['GET'])
 def get_product(id):
     product = Product.query.get(id)
 
@@ -50,7 +49,7 @@ def get_product(id):
 
 
 # Update a product
-@api_product.route('/<id>', methods=['PUT'])
+@bp_api.route('/product/<id>', methods=['PUT'])
 def update_product(id):
     product = Product.query.get(id)
 
@@ -75,7 +74,7 @@ def update_product(id):
 
 
 # Delete a product
-@api_product.route('/<id>', methods=['DELETE'])
+@bp_api.route('/product/<id>', methods=['DELETE'])
 def delete_product(id):
     product = Product.query.get(id)
     db.session.delete(product)
