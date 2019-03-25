@@ -18,27 +18,33 @@ Installation
 ^^^^^^^^^^^^
 .. code-block:: console
 
-  # In the project root directory, execute..
-  $ pip install -U pipenv
+  $ cd boilerplate_flask_sqlalchemy/
 
-  # Let the virtual environment and packages to be installed in the project
-  $ export PIPENV_VENV_IN_PROJECT=1
-
+  $ pip install -U pipenv  # If you don't have pipenv, checkout https://pipenv.readthedocs.io/en/latest/#install-pipenv-today
+  $ export PIPENV_VENV_IN_PROJECT=1  # Let the virtual environment and packages to be installed in the project
   $ pipenv install  # Install required packages
   $ pipenv shell  # Activate the virtual environment
-  $ flask create-db  # Initialize database
-  $ gunicorn --workers 1 --bind 0.0.0.0:8901 app:app  # Launch the app
+
+  $(.venv) flask create-db  # Initialize database
+  $(.venv) gunicorn --workers 1 --bind 0.0.0.0:8901 app:app  # Launch the app
+
+
+Try it out
+^^^^^^^^^^
+.. code-block:: console
+
+  $ curl -i http://0.0.0.0:8901/product
 
 
 Setup for development
 ^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  # Set hooks for `git commit` and `git push`
-  $ git config core.hooksPath hooks
+  $ pipenv install --dev  # Install dev-packages like pytest
 
-  # Create a copy of dotenv file for configurations
-  $ cp .env_example .env
+  $ git config core.hooksPath hooks  # Set hooks for `git commit` and `git push`
+
+  $ cp .env_example .env  # Create a copy of dotenv file for configurations
 
 ....
 
