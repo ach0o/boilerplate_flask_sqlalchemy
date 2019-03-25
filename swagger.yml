@@ -120,6 +120,8 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+      name:
+        type: "string"
       description:
         type: "string"
       price:
