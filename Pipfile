@@ -19,6 +19,7 @@ connexion = {extras = ["swagger-ui"]}
 pyyaml = {git = "https://github.com/yaml/pyyaml.git", editable = true, ref = "4.2b1"}
 sphinx = "*"
 Jinja2 = ">=2.10.1"
+urllib3 = ">=1.24.2"
 
 
 [dev-packages]
