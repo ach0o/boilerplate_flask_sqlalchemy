@@ -117,6 +117,13 @@ To see the documentation, run the app and simply go to
 
 * ``http://{YOUR_HOST}:{YOUR_PORT}/ui``
 
+....
+
+License
+-------
+
+See `LICENSE <https://github.com/achooan/boilerplate_flask_sqlalchemy/blob/master/LICENSE.txt>`_
+
 .. |build| image:: https://circleci.com/gh/achooan/boilerplate_flask_sqlalchemy/tree/master.svg?style=shield
     :target: https://circleci.com/gh/achooan/boilerplate_flask_sqlalchemy/tree/master
 
