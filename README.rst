@@ -9,7 +9,7 @@ Overview
 This is a boilerplate RESTful app based on Flask + SQLAlchemy
 with gunicorn, Nginx and Docker.
 
-....
+
 
 Getting Started
 ---------------
@@ -46,7 +46,7 @@ Setup for development
 
   $ cp .env_example .env  # Create a copy of dotenv file for configurations
 
-....
+
 
 Working with Docker
 -------------------
@@ -68,7 +68,7 @@ Working with Docker
 
     $ docker-compose up -d
 
-....
+
 
 Deployment
 ----------
@@ -89,7 +89,7 @@ Private Server (TODO)
     $ docker run -p 80:80 -d <IMAGE ID>
 
 
-....
+
 
 Documentation
 -------------
@@ -117,7 +117,7 @@ To see the documentation, run the app and simply go to
 
 * ``http://{YOUR_HOST}:{YOUR_PORT}/ui``
 
-....
+
 
 License
 -------
